@@ -1,0 +1,15 @@
+main > .container {
+  padding: 60px 15px 0;
+}
+.footer {
+  background-color:#212529;
+}
+
+.footer > .container > p {
+  color: white;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
