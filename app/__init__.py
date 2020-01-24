@@ -19,6 +19,6 @@ def create_app():
 
     @app.context_processor
     def site_globals():
-      return dict(title=app.config['APP_TITLE'])
+      return dict(title=app.config['APP_TITLE'], base_url=app.config['BASE_URL'])
 
     return app
