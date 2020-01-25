@@ -1,5 +1,9 @@
 {% extends 'layouts/app.html' %}
+
 {% block description %}Home{% endblock %}
+
+{% from "macros/pagination-macro.html" import render_pagination %}
+
 {% block content %}
     <div class="row">
         <div class="col-md-8">
@@ -8,22 +12,25 @@
                 <small>Blog</small>
             </h1>
 
-            {% if not posts|length %}
+            {% if not posts.items|length %}
                 <h1 class="display-4 nice-message">There are no posts as of the moment.</h1>
             {% else %}
-                {% for post in posts %}
+                {% for post in posts.items %}
                     <div class="card mb-4">
                         <div class="card-body">
                             <h2 class="card-title">{{ post.title }}</h2>
                             <p class="card-text">{{ post.content }}</p>
-                            <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                            <a href="{{ url_for('blog.post', post_id=post.id) }}" class="btn btn-primary">Read More
+                                &rarr;</a>
                         </div>
                         <div class="card-footer text-muted">
-                            Posted on January 1, 2017 by
-                            <a href="#">Start Bootstrap</a>
+                            Posted on {{ post.posted_at.strftime('%Y-%m-%d') }} by
+                            <a href="#">Placeholder</a>
                         </div>
                     </div>
                 {% endfor %}
+
+                {{ render_pagination(posts, 'home', True) }}
             {% endif %}
         </div>
 

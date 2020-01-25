@@ -1,0 +1,35 @@
+{% macro render_pagination(pagination, endpoint, simple=False) %}
+    {% if pagination.items %}
+        {% if simple %}
+            <ul class="pagination justify-content-center mb-4">
+                <li class="page-item {{ 'disabled' if not pagination.has_prev else '#' }}">
+                    <a class="page-link" href="{{ url_for(endpoint, page=pagination.prev_num) }}">&larr;
+                        Older</a>
+                </li>
+
+                <li class="page-item {{ 'disabled' if not pagination.has_next else '#' }}">
+                    <a class="page-link" href="{{ url_for(endpoint, page=pagination.next_num) }}">Newer
+                        &rarr;</a>
+                </li>
+            </ul>
+        {% else %}
+            <ul class="pagination">
+                <li class="page-item {{ 'disabled' if not pagination.has_prev }}">
+                    <a class="page-link"
+                       href="{{ url_for(endpoint, page=pagination.prev_num) }}">Previous</a>
+                </li>
+
+                {% for page in pagination.iter_pages() %}
+                    <li class="page-item {{ 'active' if '?page=' + page|string in request.url or loop.counter==1 }}">
+                        <a class="page-link"
+                           href="{{ url_for(endpoint, page=page) }}">{{ page }}</a></li>
+                {% endfor %}
+
+                <li class="page-item {{ 'disabled' if not pagination.has_next }}">
+                    <a class="page-link"
+                       href="{{ url_for(endpoint, page=pagination.next_num) }}">Next</a>
+                </li>
+            </ul>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
