@@ -19,9 +19,6 @@ def create_app():
 
   with app.app_context():
     from app import routes
-
-    @app.context_processor
-    def site_globals():
-      return dict(title=app.config['APP_TITLE'], base_url=app.config['BASE_URL'])
+    from app.utils import jinja
 
     return app
