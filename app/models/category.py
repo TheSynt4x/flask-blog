@@ -59,7 +59,7 @@ class Category(db.Model):
       per_page: results per page
 
     Returns:
-      A paginated object
+      dict
     """
     category = cls.get_by_id(category_id)
 
