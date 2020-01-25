@@ -36,11 +36,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="list-unstyled mb-0">
-                        <a class="list-group-item" href="#">JavaScript</a>
-
-                        <a class="list-group-item" href="#">CSS</a>
-
-                        <a class="list-group-item" href="#">Tutorials</a>
+                        {% for category in categories() %}
+                            <a class="list-group-item" href="#">{{ category.name }}</a>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>

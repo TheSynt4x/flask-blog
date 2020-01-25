@@ -1,5 +1,6 @@
 from flask import current_app as app
 
+from app.models.category import Category
 from app.models.post import Post
 
 
@@ -13,4 +14,7 @@ def utility_processor():
   def recent_posts():
     return Post.get_recent_posts(5)
 
-  return dict(recent_posts=recent_posts)
+  def categories():
+    return Category.limit(5)
+
+  return dict(recent_posts=recent_posts, categories=categories)

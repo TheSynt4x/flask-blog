@@ -21,4 +21,9 @@ def create_app():
     from app import routes
     from app.utils import jinja
 
+    from app.models.category import Category
+    from app.models.post import Post
+
+    db.create_all()
+
     return app

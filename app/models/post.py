@@ -6,9 +6,11 @@ from app import db
 class Post(db.Model):
   __tablename__ = 'posts'
 
-  id = db.Column(db.Integer, primary_key=True)
+  id = db.Column(db.Integer(), primary_key=True)
   title = db.Column(db.String(255), nullable=False)
   content = db.Column(db.Text(), nullable=False)
+  category_id = db.Column(db.Integer(), db.ForeignKey('categories.id'), nullable=False)
+
   posted_at = db.Column(
     db.DateTime,
     nullable=False,
@@ -40,7 +42,7 @@ class Post(db.Model):
     Returns:
       A paginated object
     """
-    return cls.query.order_by(cls.posted_at.desc()).paginate(page, per_page, True)
+    return cls.query.order_by(cls.posted_at.desc()).paginate(page, per_page, False)
 
   @classmethod
   def get_by_id(cls, post_id):
@@ -51,9 +53,9 @@ class Post(db.Model):
       post_id: specified post id
 
     Returns:
-      The first post that matches by the id
+      The first post that matches by id
     """
-    return cls.query.filter_by(id=post_id).first()
+    return cls.query.filter_by(id=post_id).first_or_404()
 
   @classmethod
   def get_recent_posts(cls, limit=5):
