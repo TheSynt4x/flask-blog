@@ -1,16 +1,32 @@
-main > .container {
-  padding-top: 80px;
-  margin-bottom: 40px;
+html {
+  position: relative;
+  min-height: 100%;
 }
+
+body {
+  margin-bottom: 5rem;
+}
+
+main > .container {
+    padding: 60px 15px 0;
+}
+
 .footer {
-  background-color:#212529;
+    background-color: #212529;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .footer > .container > p {
-  color: white;
+    color: white;
 }
 
 .footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.nice-message {
+  font-size: 24px;
 }
