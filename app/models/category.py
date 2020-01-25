@@ -47,3 +47,20 @@ class Category(db.Model):
     A list of retrieved categories
     """
     return cls.query.limit(limit).all()
+
+  @classmethod
+  def get_posts(cls, category_id, page, per_page):
+    """
+    Get posts for a specific category
+
+    Args:
+      category_id: specified category
+      page: current page
+      per_page: results per page
+
+    Returns:
+      A paginated object
+    """
+    category = cls.get_by_id(category_id)
+
+    return dict(category=category, posts=category.posts.paginate(page, per_page, True))

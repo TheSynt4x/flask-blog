@@ -1,0 +1,39 @@
+{% extends 'layouts/app.html' %}
+
+{% block description %}Category {{ category.name }}{% endblock %}
+
+{% from "macros/pagination-macro.html" import render_pagination %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+
+            <h1 class="my-4">{{ title }}
+                <small>Category {{ category.name|lower }}</small>
+            </h1>
+
+            {% if not posts.items|length %}
+                <h1 class="display-4 nice-message">There are no posts as of the moment.</h1>
+            {% else %}
+                {% for post in posts.items %}
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ post.title }}</h2>
+                            <p class="card-text">{{ post.content }}</p>
+                            <a href="{{ url_for('blog.post', post_id=post.id) }}" class="btn btn-primary">Read More
+                                &rarr;</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Posted on {{ post.posted_at.strftime('%Y-%m-%d') }} by
+                            <a href="#">Placeholder</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {{ render_pagination(posts, 'home', True) }}
+            {% endif %}
+        </div>
+
+        {% include 'partials/sidebar.html' %}
+    </div>
+{% endblock %}
