@@ -8,6 +8,8 @@ python-dotenv = "*"
 
 [packages]
 flask = "*"
+flask-sqlalchemy = "*"
+pymysql = "*"
 
 [requires]
 python_version = "3.8"
