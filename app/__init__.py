@@ -1,7 +1,9 @@
 from flask import Flask
 from flask_dotenv import DotEnv
+from flask_sqlalchemy import SQLAlchemy
 
 env = DotEnv()
+db = SQLAlchemy()
 
 
 def create_app():
@@ -13,6 +15,7 @@ def create_app():
   )
 
   env.init_app(app, env_file='.env', verbose_mode=True)
+  db.init_app(app)
 
   with app.app_context():
     from app import routes
