@@ -1,4 +1,4 @@
-from flask import current_app as app, session
+from flask import current_app as app, session, url_for, request
 
 from app.models.category import Category
 from app.models.post import Post
@@ -6,9 +6,22 @@ from app.models.user import User
 
 from datetime import datetime
 
+
 @app.context_processor
 def site_globals():
   return dict(title=app.config['APP_TITLE'], base_url=app.config['BASE_URL'])
+
+
+def url_for_other_page(page, **kwargs):
+  args = request.view_args.copy()
+  args['page'] = page
+
+  new_args = {**kwargs, **args}
+
+  return url_for(request.endpoint, **new_args)
+
+
+app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 
 
 @app.context_processor
