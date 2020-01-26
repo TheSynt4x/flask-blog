@@ -15,6 +15,6 @@ class SearchController(MethodView):
     query = request.args.get('query', type=str)
     page = request.args.get('page', 1, type=int)
 
-    posts = Post.search(query, page=page, per_page=1)
+    posts = Post.search(query, page=page, per_page=5)
 
     return render_template('blog/search.html', query=query, posts=posts)

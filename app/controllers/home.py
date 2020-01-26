@@ -13,6 +13,6 @@ class HomeController(MethodView):
       Home template with dynamic posts
     """
     page = request.args.get('page', 1, type=int)
-    per_page = 1
+    per_page = 5
 
     return render_template('home.html', posts=Post.paginate(page, per_page))
