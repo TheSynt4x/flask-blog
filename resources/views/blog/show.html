@@ -9,7 +9,7 @@
             <h1 class="mt-4">{{ post.title }}</h1>
             <p class="lead">
                 by
-                <a href="#">Placeholder</a>
+                <a href="#">{{ post.user.username }}</a>
             </p>
 
 
@@ -24,9 +24,9 @@
             <div class="card my-4">
                 <h5 class="card-header">Leave a Comment:</h5>
                 <div class="card-body">
-                    <form>
+                    <form action="{{ url_for('blog.post.comment', post_id=post.id) }}" method="POST">
                         <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea name="comment" class="form-control" rows="3"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

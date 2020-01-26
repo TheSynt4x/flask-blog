@@ -16,7 +16,7 @@ class Post(db.Model):
   comments = db.relationship('Comment', backref='post', lazy='dynamic')
 
   posted_at = db.Column(
-    db.DateTime,
+    db.TIMESTAMP,
     nullable=False,
     default=datetime.now(tz=pytz.timezone("Europe/Stockholm")),
   )
@@ -88,6 +88,20 @@ class Post(db.Model):
       A list of posts that match the search query
     """
     return cls.query.filter(cls.title.like('%{0}%'.format(query))).paginate(page, per_page, True)
+
+  def paginate_comments(self, page, per_page):
+    """
+    Paginate through a post's comments
+
+    Args:
+      page: current page
+      per_page: amount of results per page
+
+    Returns:
+      A paginated object of comments
+    """
+
+    return self.comments.paginate(page, per_page)
 
   def to_dict(self):
     """

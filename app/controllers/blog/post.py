@@ -16,10 +16,10 @@ class PostController(MethodView):
       Single blog template with a dynamic post
     """
     page = request.args.get('page', 1, type=int)
-    per_page = 1
+    per_page = 5
 
     post = Post.get_by_id(post_id)
-    comments = post.comments.paginate(page, per_page)
+    comments = post.paginate_comments(page, per_page)
 
     return render_template('blog/show.html', post=post, comments=comments)
 

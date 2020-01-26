@@ -33,7 +33,9 @@ def utility_processor():
     return Category.limit(5)
 
   def current_user():
-    return User.get_by_id(session.get('user_id')).to_dict()
+    if session.get('user_id'):
+      return User.get_by_id(session.get('user_id'))
+    return False
 
   return dict(recent_posts=recent_posts, categories=categories, current_user=current_user)
 
