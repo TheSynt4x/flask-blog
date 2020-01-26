@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from flask_wtf.file import FileAllowed
+from wtforms import StringField, SubmitField, PasswordField, FileField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 
 from app.models.user import User
@@ -37,9 +38,15 @@ class RegisterForm(FlaskForm):
   confirm_password = PasswordField(
     label='Confirm Password',
     validators=[
-      DataRequired(message='Confirm password is required.'),
       EqualTo(fieldname='password', message='Passwords do not match.')
     ],
+  )
+
+  avatar = FileField(
+    label='Avatar',
+    validators=[
+      FileAllowed({'png', 'jpg', 'jpeg', 'gif'})
+    ]
   )
 
   submit = SubmitField(label='Register')

@@ -8,12 +8,14 @@ class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String(255), nullable=False)
   password = db.Column(db.String(255), nullable=False)
+  avatar = db.Column(db.String(255), nullable=False, default='no-image.png')
   posts = db.relationship('Post', backref='user', lazy='dynamic')
   comments = db.relationship('Comment', backref='user', lazy='dynamic')
 
-  def __init__(self, username, password):
+  def __init__(self, username, password, avatar):
     self.username = username
     self.password = password
+    self.avatar = avatar
 
   def __repr__(self):
     return '<User %r>' % self.username
@@ -32,18 +34,19 @@ class User(db.Model):
     return cls.query.filter_by(id=user_id).first()
 
   @classmethod
-  def create(cls, username, password):
+  def create(cls, username, password, avatar):
     """
     Create a new user
 
     Args:
       username: user input
       password: user input
+      avatar: user's avatar
 
     Returns:
       A newly created user
     """
-    user = cls(username=username, password=generate_password_hash(password + username))
+    user = cls(username=username, password=generate_password_hash(password + username), avatar=avatar)
 
     db.session.add(user)
     db.session.commit()

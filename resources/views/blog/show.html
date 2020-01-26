@@ -41,7 +41,7 @@
 
             {% for comment in comments.items %}
                 <div class="media mb-4">
-                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <img class="d-flex mr-3 rounded-circle" width="100" height="100" src="{{ base_url }}/images/{{ comment.user.avatar }}" alt="">
                     <div class="media-body">
                         <h5 class="mt-0">{{ comment.user.username }} <small
                                 class="small">{{ comment.posted_at|humanize }}</small></h5>

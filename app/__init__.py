@@ -14,6 +14,8 @@ def create_app():
     static_folder='../public/'
   )
 
+  app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024
+
   env.init_app(app, env_file='.env', verbose_mode=True)
   db.init_app(app)
 

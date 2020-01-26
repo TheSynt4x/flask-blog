@@ -26,7 +26,7 @@
                 {% if field.type in ('StringField', 'TextField', 'TextAreaField', 'PasswordField') %}
                     {% set class_ = class_ + ' form-control' %}
                 {% elif field.type == 'FileField' %}
-                    {% set class_ = class_ + ' form-control-file' %}
+                    {% set class_ = class_ + 'form-control-file' %}
                 {% endif %}
 
                 {% if field.errors %}
