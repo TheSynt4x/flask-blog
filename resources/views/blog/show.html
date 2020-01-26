@@ -1,5 +1,8 @@
 {% extends 'layouts/app.html' %}
 {% block description %}Post {{ post.id }}{% endblock %}
+
+{% from 'macros/pagination-macro.html' import render_pagination %}
+
 {% block content %}
     <div class="row">
         <div class="col-lg-8">
@@ -30,16 +33,17 @@
                 </div>
             </div>
 
-            <div class="media mb-4">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                <div class="media-body">
-                    <h5 class="mt-0">Commenter Name</h5>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
-                    purus
-                    odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
-                    fringilla. Donec lacinia congue felis in faucibus.
+            {% for comment in comments.items %}
+                <div class="media mb-4">
+                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        <h5 class="mt-0">{{ comment.user.username }}</h5>
+                        {{ comment.comment }}
+                    </div>
                 </div>
-            </div>
+            {% endfor %}
+
+            {{ render_pagination(comments, simple=False) }}
         </div>
 
         {% include 'partials/sidebar.html' %}

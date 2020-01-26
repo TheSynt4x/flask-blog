@@ -2,6 +2,8 @@
 
 {% block description %}Search results for {{ query }}{% endblock %}
 
+{% from 'macros/pagination-macro.html' import render_pagination %}
+
 {% block content %}
     <div class="row">
         <div class="col-md-8">
@@ -16,17 +18,7 @@
                     {% include 'partials/post-card.html' %}
                 {% endfor %}
 
-                <ul class="pagination justify-content-center mb-4">
-                    <li class="page-item {{ 'disabled' if not posts.has_prev else '#' }}">
-                        <a class="page-link" href="{{ url_for('blog.search', query=query, page=posts.prev_num) }}">&larr;
-                            Older</a>
-                    </li>
-
-                    <li class="page-item {{ 'disabled' if not posts.has_next else '#' }}">
-                        <a class="page-link" href="{{ url_for('blog.search', query=query, page=posts.next_num) }}">Newer
-                            &rarr;</a>
-                    </li>
-                </ul>
+                {{ render_pagination(posts, {'query': query}, simple=True) }}
             {% endif %}
         </div>
 

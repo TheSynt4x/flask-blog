@@ -19,7 +19,7 @@
                     {% include 'partials/post-card.html' %}
                 {% endfor %}
 
-                {{ render_pagination(posts, 'home', True) }}
+                {{ render_pagination(posts, simple=True) }}
             {% endif %}
         </div>
 
