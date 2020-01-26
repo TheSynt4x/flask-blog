@@ -8,6 +8,8 @@ class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String(255), nullable=False)
   password = db.Column(db.String(255), nullable=False)
+  posts = db.relationship('Post', backref='user', lazy='dynamic')
+  comments = db.relationship('Comment', backref='user', lazy='dynamic')
 
   def __init__(self, username, password):
     self.username = username

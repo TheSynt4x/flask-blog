@@ -11,7 +11,9 @@ class Post(db.Model):
   id = db.Column(db.Integer(), primary_key=True)
   title = db.Column(db.String(255), nullable=False)
   content = db.Column(db.Text(), nullable=False)
+  user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
   category_id = db.Column(db.Integer(), db.ForeignKey('categories.id'), nullable=False)
+  comments = db.relationship('Comment', backref='post', lazy='dynamic')
 
   posted_at = db.Column(
     db.DateTime,
