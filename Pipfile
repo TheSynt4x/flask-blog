@@ -12,6 +12,7 @@ flask-sqlalchemy = "*"
 pymysql = "*"
 pytz = "*"
 flask-wtf = "*"
+flask-bcrypt = "*"
 
 [requires]
 python_version = "3.8"

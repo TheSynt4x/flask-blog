@@ -1,7 +1,8 @@
-from flask import current_app as app
+from flask import current_app as app, session
 
 from app.models.category import Category
 from app.models.post import Post
+from app.models.user import User
 
 from datetime import datetime
 
@@ -18,7 +19,10 @@ def utility_processor():
   def categories():
     return Category.limit(5)
 
-  return dict(recent_posts=recent_posts, categories=categories)
+  def current_user():
+    return User.get_by_id(session.get('user_id')).to_dict()
+
+  return dict(recent_posts=recent_posts, categories=categories, current_user=current_user)
 
 
 @app.template_filter('humanize')
@@ -59,3 +63,7 @@ def humanize_time(time):
     return str(int(day_diff / 30)) + " months ago"
   return str(int(day_diff / 365)) + " years ago"
 
+
+@app.template_filter('ucfirst')
+def ucfirst(text):
+  return text[0].upper() + text[1:]

@@ -2,30 +2,18 @@
 
 {% block description %}Register{% endblock %}
 
+{% from 'macros/validation-macro.html' import form_field %}
+
 {% block content %}
     <div class="row justify-content-center mx-auto mt-4">
         <div class="col-md-5">
-            <form class="needs-validation">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" placeholder="Username" class="form-control"/>
-                </div>
+            <form class="needs-validation" method="POST" action="{{ url_for('register') }}">
+                {{ form_field(form.username) }}
+                {{ form_field(form.password) }}
+                {{ form_field(form.confirm_password) }}
+                {{ form_field(form.submit) }}
 
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" placeholder="Password"
-                           class="form-control"/>
-                </div>
-
-                <div class="form-group">
-                    <label for="confirm_password">Confirm Password:</label>
-                    <input type="password" id="confirm_password" name="confirm_password"
-                           placeholder="Confirm your password" class="form-control"/>
-                </div>
-
-                <div class="form-group text-center">
-                    <input type="submit" value="Register" class="btn btn-primary"/>
-                </div>
+                {{ form.csrf_token }}
             </form>
         </div>
     </div>

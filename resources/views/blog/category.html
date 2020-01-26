@@ -9,8 +9,10 @@
         <div class="col-md-8">
 
             <h1 class="my-4">{{ title }}
-                <small>Category {{ category.name|lower }}</small>
+                <small>Blog</small>
             </h1>
+
+            <h4 class="mb-5">You're viewing all posts under the {{ category.name }} category.</h4>
 
             {% if not posts.items|length %}
                 <h1 class="display-4 nice-message">There are no posts as of the moment.</h1>

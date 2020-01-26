@@ -1,0 +1,23 @@
+{% with errors = get_flashed_messages(category_filter=["error"]) %}
+    {% if errors %}
+        <div class="alert alert-danger my-2" role="alert">
+            {{ errors | first }}
+        </div>
+    {% endif %}
+{% endwith %}
+
+{% with success = get_flashed_messages(category_filter=["success"]) %}
+    {% if success %}
+        <div class="alert alert-success my-2" role="alert">
+            {{ success | first }}
+        </div>
+    {% endif %}
+{% endwith %}
+
+{% with info = get_flashed_messages(category_filter=["info"]) %}
+    {% if info %}
+        <div class="alert alert-info my-2" role="alert">
+            {{ info | first }}
+        </div>
+    {% endif %}
+{% endwith %}

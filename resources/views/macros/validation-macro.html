@@ -1,0 +1,51 @@
+{% macro form_field(field) %}
+    {% set with_label = kwargs.pop('with_label', False) %}
+
+    {% set placeholder = '' %}
+
+    {% if not with_label %}
+        {% set placeholder = field.label.text|ucfirst %}
+    {% endif %}
+
+    <div class="form-group {{ 'text-center' if field.type == 'SubmitField' else '' }}">
+        {% if field.type == 'SubmitField' %}
+            {{ field(class_='btn btn-primary') }}
+        {% else %}
+            <label for="{{ field.id }}">
+                {{ field.label.text }}:
+            </label>
+
+            {% set class_ = kwargs.pop('class_', '') %}
+
+            {% if field.type == 'BooleanField' %}
+                <label class="checkbox">
+                    {{ field(class_=class_, **kwargs) }}
+                    {{ field.label.text|safe }}
+                </label>
+            {% else %}
+                {% if field.type in ('StringField', 'TextField', 'TextAreaField', 'PasswordField') %}
+                    {% set class_ = class_ + ' form-control' %}
+                {% elif field.type == 'FileField' %}
+                    {% set class_ = class_ + ' form-control-file' %}
+                {% endif %}
+
+                {% if field.errors %}
+                    {% set class_ = class_ + ' is-invalid' %}
+                {% endif %}
+
+                {% set value = field.data if field.data != None else '' %}
+
+                {{ field(class_=class_, placeholder=placeholder, value=value, **kwargs) }}
+            {% endif %}
+
+            {% if field.errors %}
+                <div class="invalid-feedback">{{ field.errors|first }}</div>
+            {% endif %}
+
+            {% if field.description %}
+                <small class="form-text text-muted">{{ field.description|safe }}</small>
+            {% endif %}
+        {% endif %}
+    </div>
+
+{% endmacro %}

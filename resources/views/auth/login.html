@@ -5,7 +5,7 @@
 {% block content %}
     <div class="row justify-content-center mx-auto mt-4">
         <div class="col-md-5">
-            <form class="needs-validation">
+            <form class="needs-validation" action="{{ url_for('login') }}" method="POST">
                 <div class="form-group">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" placeholder="Username" class="form-control"/>
