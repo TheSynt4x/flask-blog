@@ -1,0 +1,35 @@
+{% extends 'layouts/app.html' %}
+
+{% block description %}Search results for {{ query }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="my-4">Search results for <small>{{ query }}</small></h2>
+
+            <hr/>
+
+            {% if not posts.items|length %}
+                <h1 class="display-4 nice-message">No search results found for {{ query }}.</h1>
+            {% else %}
+                {% for post in posts.items %}
+                    {% include 'partials/post-card.html' %}
+                {% endfor %}
+
+                <ul class="pagination justify-content-center mb-4">
+                    <li class="page-item {{ 'disabled' if not posts.has_prev else '#' }}">
+                        <a class="page-link" href="{{ url_for('blog.search', query=query, page=posts.prev_num) }}">&larr;
+                            Older</a>
+                    </li>
+
+                    <li class="page-item {{ 'disabled' if not posts.has_next else '#' }}">
+                        <a class="page-link" href="{{ url_for('blog.search', query=query, page=posts.next_num) }}">Newer
+                            &rarr;</a>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+
+        {% include 'partials/sidebar.html' %}
+    </div>
+{% endblock %}

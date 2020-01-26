@@ -1,5 +1,7 @@
 from datetime import datetime
+
 import pytz
+
 from app import db
 
 
@@ -69,6 +71,21 @@ class Post(db.Model):
       A list of posts with the specified limit
     """
     return cls.query.order_by(cls.posted_at.desc()).limit(limit).all()
+
+  @classmethod
+  def search(cls, query, page, per_page):
+    """
+    Get all posts matching the search query
+
+    Args:
+      page: current page
+      per_page: results per page
+      query: specified query for searching
+
+    Returns:
+      A list of posts that match the search query
+    """
+    return cls.query.filter(cls.title.like('%{0}%'.format(query))).paginate(page, per_page, True)
 
   def to_dict(self):
     """
