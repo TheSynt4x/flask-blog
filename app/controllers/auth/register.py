@@ -1,14 +1,17 @@
 from flask import render_template, flash, redirect, url_for
 from flask.views import MethodView
 
-from app.validators.register_form import RegisterForm
+from app.middleware import auth
 from app.models.user import User
+from app.validators.register_form import RegisterForm
 
 
 class RegisterController(MethodView):
+  @auth.optional
   def get(self):
     return render_template('auth/register.html', form=RegisterForm())
 
+  @auth.optional
   def post(self):
     form = RegisterForm()
 

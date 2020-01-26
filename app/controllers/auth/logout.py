@@ -1,8 +1,11 @@
 from flask import redirect, url_for, session, flash
 from flask.views import MethodView
 
+from app.middleware import auth
+
 
 class LogoutController(MethodView):
+  @auth.required
   def get(self):
     """
     Logout a user
