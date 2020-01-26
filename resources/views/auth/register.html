@@ -1,0 +1,40 @@
+{% extends 'layouts/app.html' %}
+
+{% block description %}Register{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center mx-auto mt-4">
+        <div class="col-md-5">
+            <form class="needs-validation">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" placeholder="Username" class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Password"
+                           class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password"
+                           placeholder="Confirm your password" class="form-control"/>
+                </div>
+
+                <div class="form-group text-center">
+                    <input type="submit" value="Register" class="btn btn-primary"/>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(() => {
+            $('#register').addClass('active');
+        });
+    </script>
+{% endblock %}
