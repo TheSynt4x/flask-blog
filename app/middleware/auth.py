@@ -20,7 +20,7 @@ def required(func):
       flash('You\'re not logged in.', 'info')
       return redirect(url_for('login'))
     else:
-      self.user = User.query.get(session.get('user_id'))
+      self.user = User.get_by_id(session.get('user_id'))
       return func(self, *args, **kwargs)
 
   return wrapper
