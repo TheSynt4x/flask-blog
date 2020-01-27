@@ -31,7 +31,20 @@ class User(db.Model):
     Returns:
        The retrieved user
     """
-    return cls.query.filter_by(id=user_id).first()
+    return cls.query.filter_by(id=user_id).first_or_404()
+
+  @classmethod
+  def get_by_username(cls, username):
+    """
+    Get a user by username
+
+    Args:
+      username: user's username
+
+    Returns:
+      The retrieved user
+    """
+    return cls.query.filter_by(username=username).first_or_404()
 
   @classmethod
   def create(cls, username, password, avatar):
@@ -72,6 +85,32 @@ class User(db.Model):
         return user
 
     return False
+
+  def change_password(self, new_password):
+    """
+    Change user password
+
+    Args:
+      new_password: the new password
+
+    Returns:
+      void
+    """
+    self.password = generate_password_hash(new_password + self.username)
+    db.session.commit()
+
+  def change_avatar(self, new_avatar):
+    """
+    Change user avatar
+
+    Args:
+      new_avatar: the uploaded avatar
+
+    Returns:
+      void
+    """
+    self.avatar = new_avatar
+    db.session.commit()
 
   def to_dict(self):
     return dict(id=self.id, username=self.username)
