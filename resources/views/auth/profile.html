@@ -1,0 +1,36 @@
+{% extends 'layouts/app.html' %}
+
+{% block description %}User's profile{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card my-4">
+                <h5 class="card-header">{{ user.username|ucfirst }}'s profile</h5>
+
+                <div class="card-body">
+                    <div class="media mb-4">
+                        <img class="d-flex mr-3 rounded-circle" width="100" height="100"
+                             src="{{ base_url }}/images/avatars/{{ user.avatar }}" alt="">
+                        <div class="media-body">
+                            <p><strong>Admin: </strong> True</p>
+                            <p><strong>Posts: </strong> {{ user.posts.count() }}</p>
+                            <p><strong>Comments: </strong> {{ user.comments.count() }}</p>
+                            <p><strong>Biography:</strong></p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer hendrerit euismod sem ut
+                                eleifend. Suspendisse vel nisl turpis. Donec consequat rhoncus felis. Phasellus
+                                tincidunt id neque vel volutpat. Aenean placerat porttitor eros. Etiam quis est mattis,
+                                lacinia odio non, mattis ligula. Donec pharetra nisl nibh, a ornare urna feugiat vitae.
+                                Pellentesque vitae est luctus, gravida mauris ut, efficitur lacus. Fusce nisi augue,
+                                feugiat vel feugiat in, auctor a nisl. Vestibulum pellentesque nibh quis velit dapibus
+                                molestie vel eu purus. Nam sit amet lorem vel augue posuere tincidunt in fringilla ante.
+                                Donec vel purus sem. Suspendisse placerat purus ut mollis blandit. Aenean scelerisque
+                                tempor consequat. Praesent ac orci ac dolor sollicitudin dapibus eu ut erat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
