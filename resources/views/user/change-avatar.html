@@ -1,0 +1,20 @@
+{% extends 'layouts/app.html' %}
+
+{% block description %}Change Avatar{% endblock %}
+
+{% from 'macros/validation-macro.html' import form_field %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-6 my-4">
+            <h3 class="text-center mb-4">Change your avatar</h3>
+
+            <form action="{{ url_for('avatar') }}" method="POST" class="needs-validation" enctype="multipart/form-data">
+                {{ form_field(form.avatar) }}
+                {{ form_field(form.submit) }}
+                {{ form.csrf_token }}
+            </form>
+
+        </div>
+    </div>
+{% endblock %}
