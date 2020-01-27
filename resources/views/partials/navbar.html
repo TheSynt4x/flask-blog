@@ -28,10 +28,13 @@
                            aria-haspopup="true" aria-expanded="false">
                             {{ current_user()['username'] }}
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Profile</a>
-                            <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
 
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item"
+                               href="{{ url_for('profile', username=current_user()['username']) }}">Profile</a>
+                            <a class="dropdown-item" href="{{ url_for('password') }}">Change Password</a>
+                            <a class="dropdown-item" href="{{ url_for('avatar') }}">Change Avatar</a>
+                            <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
                         </div>
                     </li>
                 {% else %}
