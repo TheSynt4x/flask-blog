@@ -1,4 +1,4 @@
-{% macro form_field(field) %}
+{% macro form_field(field, input_value=None) %}
     {% set with_label = kwargs.pop('with_label', False) %}
 
     {% set placeholder = '' %}
@@ -35,7 +35,13 @@
 
                 {% set value = field.data if field.data != None else '' %}
 
-                {{ field(class_=class_, placeholder=placeholder, value=value, **kwargs) }}
+                {% set name = field.name %}
+
+                {% if field.type == 'TextAreaField' and input_value %}
+                    <textarea id="{{ name }}" name="{{ name }}" class="{{ class_ }}">{{ input_value }}</textarea>
+                {% else %}
+                    {{ field(class_=class_, placeholder=placeholder, value=value if not input_value else input_value, **kwargs) }}
+                {% endif %}
             {% endif %}
 
             {% if field.errors %}
