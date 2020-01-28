@@ -20,4 +20,4 @@ class CategoryController(MethodView):
 
     category = Category.get_posts(category_id, page, per_page)
 
-    return render_template('blog/category.html', category=category['category'], posts=category['posts'])
+    return render_template('blog/category/show.html', category=category['category'], posts=category['posts'])

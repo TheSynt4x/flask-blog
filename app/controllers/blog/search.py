@@ -17,4 +17,4 @@ class SearchController(MethodView):
 
     posts = Post.search(query, page=page, per_page=5)
 
-    return render_template('blog/search.html', query=query, posts=posts)
+    return render_template('blog/search/show.html', query=query, posts=posts)
