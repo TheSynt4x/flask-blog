@@ -1,3 +1,8 @@
 /.idea
 __pycache__
 *.py[cod]
+/public/images/avatars/*.jpg
+/public/images/avatars/*.png
+/public/images/avatars/*.gif
+/public/images/avatars/*.jpeg
+!/public/images/avatars/no-image.png
