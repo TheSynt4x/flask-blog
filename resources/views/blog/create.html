@@ -8,11 +8,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8 my-4">
             <div class="card">
-                <h5 class="card-header">Editing post: {{ post.title }}</h5>
+                <h5 class="card-header">Create a Post</h5>
 
                 <div class="card-body">
-                    <form action="{{ url_for('blog.post.edit', post_id=post.id) }}" method="POST" class="needs-validation">
-                        {{ form_field(form.title, post.title) }}
+                    <form action="{{ url_for('blog.post.create') }}" method="POST" class="needs-validation">
+                        {{ form_field(form.title) }}
 
                         <div class="form-group">
                             <label for="category">Category</label>
@@ -23,11 +23,9 @@
                             </select>
                         </div>
 
-                        {{ form_field(form.post_content, post.content) }}
-
+                        {{ form_field(form.post_content) }}
                         {{ form_field(form.submit) }}
                         {{ form.csrf_token }}
-
                     </form>
                 </div>
 
@@ -39,7 +37,7 @@
 {% block scripts %}
     <script>
         $('#post_content').summernote({
-            placeholder: 'Edit your post',
+            placeholder: 'Create your post',
             tabsize: 2,
             height: 200,
             popover: {
