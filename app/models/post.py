@@ -25,6 +25,26 @@ class Post(db.Model):
     return '<Post %r>' % self.id
 
   @classmethod
+  def create(cls, title, post_content, user_id, category_id):
+    """
+    Create a new post
+
+    Args:
+      title: the post title
+      post_content: post content
+      user_id: the user who posted it
+      category_id: what category the post is in
+
+    Returns:
+      A newly created post
+    """
+    post = cls(title=title, content=post_content, user_id=user_id, category_id=category_id)
+    db.session.add(post)
+    db.session.commit()
+
+    return post
+
+  @classmethod
   def all(cls):
     """
     Get all posts
@@ -89,6 +109,25 @@ class Post(db.Model):
     """
     return cls.query.filter(cls.title.like('%{0}%'.format(query))).paginate(page, per_page, True)
 
+  @classmethod
+  def delete_by_id(cls, post_id):
+    """
+    Delete a post by id
+
+    Args:
+      post_id: the post to be deleted
+
+    Returns:
+      void
+    """
+    post = cls.get_by_id(post_id)
+
+    for comment in post.comments:
+      db.session.delete(comment)
+
+    db.session.delete(cls.get_by_id(post_id))
+    db.session.commit()
+
   def paginate_comments(self, page, per_page):
     """
     Paginate through a post's comments
@@ -102,6 +141,24 @@ class Post(db.Model):
     """
 
     return self.comments.paginate(page, per_page)
+
+  def update(self, title, content, category_id):
+    """
+    Update a post and its values
+
+    Args:
+      title: new title
+      content: new content
+      category_id: a new category
+
+    Returns:
+      void
+    """
+    self.title = title
+    self.content = content
+    self.category_id = category_id
+
+    db.session.commit()
 
   def to_dict(self):
     """
