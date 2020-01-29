@@ -115,8 +115,12 @@ class DeletePostController(MethodView):
     Returns:
 
     """
-    Post.delete_by_id(post_id)
+    post = Post.delete_by_id(post_id)
 
-    flash('Your post has been successfully deleted', 'success')
+    if post:
+      flash('Your post has been successfully deleted', 'success')
 
-    return redirect(url_for('home'))
+      return redirect(url_for('home'))
+    else:
+      flash('That post does not belong to you', 'error')
+      return redirect(url_for('blog.post', post_id=post.id))

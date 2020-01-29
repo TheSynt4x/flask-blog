@@ -1,6 +1,4 @@
 from app import db
-import pytz
-from datetime import datetime
 
 
 class Comment(db.Model):
@@ -13,7 +11,7 @@ class Comment(db.Model):
   posted_at = db.Column(
     db.TIMESTAMP,
     nullable=False,
-    default=datetime.now(tz=pytz.timezone("Europe/Stockholm")),
+    default=db.func.current_timestamp(),
   )
 
   def __init__(self, user_id, post_id, comment):
@@ -23,3 +21,39 @@ class Comment(db.Model):
 
   def __repr__(self):
     return '<Comment %r>' % self.id
+
+  @classmethod
+  def get_by_post(cls, post_id, comment_id):
+    """
+    Get a comment by post id and comment id
+
+    Args:
+      post_id: the post comment belongs to
+      comment_id: comment id
+
+    Returns:
+      Retrieved comment or 404 if not found.
+    """
+    return cls.query.filter_by(post_id=post_id).filter_by(id=comment_id).first_or_404()
+
+  @classmethod
+  def delete_by_id(cls, post_id, comment_id, user_id):
+    """
+    Delete a comment by post id and comment id
+
+    Args:
+      user_id:
+      post_id: the post comment belongs to
+      comment_id: comment id
+
+    Returns:
+      boolean
+    """
+    comment = cls.get_by_post(post_id, comment_id)
+
+    if comment.user_id == user_id:
+      db.session.delete(cls.get_by_post(post_id, comment_id))
+      db.session.commit()
+      return True
+    else:
+      return False

@@ -110,23 +110,29 @@ class Post(db.Model):
     return cls.query.filter(cls.title.like('%{0}%'.format(query))).paginate(page, per_page, True)
 
   @classmethod
-  def delete_by_id(cls, post_id):
+  def delete_by_id(cls, post_id, user_id):
     """
     Delete a post by id
 
     Args:
+      user_id: the current logged in user
       post_id: the post to be deleted
 
     Returns:
-      void
+      boolean
     """
     post = cls.get_by_id(post_id)
 
-    for comment in post.comments:
-      db.session.delete(comment)
+    if post.user.id == user_id:
+      for comment in post.comments:
+        db.session.delete(comment)
 
-    db.session.delete(cls.get_by_id(post_id))
-    db.session.commit()
+      db.session.delete(cls.get_by_id(post_id))
+      db.session.commit()
+
+      return True
+    else:
+      return False
 
   def paginate_comments(self, page, per_page):
     """
