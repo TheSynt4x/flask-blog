@@ -11,7 +11,7 @@
             <p class="lead">
                 by
                 <a href="{{ url_for('profile', username=post.user.username) }}">{{ post.user.username }}</a>
-        n    </p>
+            </p>
 
             <p>Posted {{ post.posted_at|humanize }}</p>
 
@@ -47,9 +47,20 @@
                     <img class="d-flex mr-3 rounded-circle" width="100" height="100"
                          src="{{ base_url }}/images/avatars/{{ comment.user.avatar }}" alt="">
                     <div class="media-body">
-                        <h5 class="mt-0">{{ comment.user.username }} <small
-                                class="small">{{ comment.posted_at|humanize }}</small></h5>
-                        {{ comment.comment|safe }}
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="mt-0">{{ comment.user.username }} <small
+                                        class="small">{{ comment.posted_at|humanize }}</small></h5>
+                                {{ comment.comment|safe }}
+                            </div>
+                            <div class="col-md-4">
+                                <a href="{{ url_for('blog.comment.edit', post_id=comment.post.id, comment_id=comment.id) }}"
+                                   class="mt-0 btn btn-primary">Edit</a>
+                                <a href="{{ url_for('blog.comment.delete', post_id=comment.post.id, comment_id=comment.id) }}"
+                                   class="mt-0 btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                        <hr/>
                     </div>
                 </div>
             {% endfor %}
