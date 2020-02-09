@@ -45,6 +45,20 @@ class Post(db.Model):
     return post
 
   @classmethod
+  def get_by_comment(cls, post_id, comment_id):
+    """
+    Get comment by post and comment id
+
+    Args:
+      post_id: post id
+      comment_id: comment id
+
+    Returns:
+      The first comment matched by post_id and comment_id
+    """
+    return cls.get_by_id(post_id).comments.filter_by(id=comment_id).first_or_404()
+
+  @classmethod
   def all(cls):
     """
     Get all posts
