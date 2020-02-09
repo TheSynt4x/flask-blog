@@ -1,10 +1,11 @@
-from flask import request, redirect, url_for, session, flash
+from flask import request, redirect, url_for, session, flash, render_template
 from flask.views import MethodView
 
 from app import db
 from app.middleware import auth
 from app.models.comment import Comment
 from app.models.post import Post
+from app.validators.comment_form import EditCommentForm
 
 
 class CommentController(MethodView):
@@ -32,11 +33,27 @@ class CommentController(MethodView):
 class EditCommentController(MethodView):
   @auth.required
   def get(self, post_id, comment_id):
-    return 'ok'
+    return render_template(
+      'blog/comments/edit.html',
+      comment=Post.get_by_comment(post_id, comment_id),
+      form=EditCommentForm(),
+    )
 
   @auth.required
   def post(self, post_id, comment_id):
-    pass
+    comment = Post.get_by_comment(post_id, comment_id)
+
+    form = EditCommentForm()
+
+    if form.validate_on_submit():
+      comment.comment = form.comment.data
+      db.session.commit()
+
+      flash('Your comment has been updated.', 'info')
+
+      return redirect(url_for('blog.post', post_id=post_id))
+
+    return render_template('blog/comments/edit.html', comment=comment, form=form)
 
 
 class DeleteCommentController(MethodView):
