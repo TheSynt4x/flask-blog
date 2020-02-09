@@ -1,10 +1,10 @@
+from datetime import datetime
+
 from flask import current_app as app, session, url_for, request
 
 from app.models.category import Category
 from app.models.post import Post
 from app.models.user import User
-
-from datetime import datetime
 
 
 @app.context_processor
@@ -13,6 +13,16 @@ def site_globals():
 
 
 def url_for_other_page(page, **kwargs):
+  """
+  Creates a url_for link with existing url parameters
+
+  Args:
+    page: page query parameter
+    **kwargs: more query parameters
+
+  Returns:
+    A url_for links with the wished query parameters.
+  """
   args = request.view_args.copy()
   args['page'] = page
 
@@ -59,26 +69,35 @@ def humanize_time(time):
     if second_diff < 10:
       return "just now"
     if second_diff < 60:
-      return str(int(second_diff)) + " seconds ago"
+      return str(int(second_diff)) + " second{0} ago".format('s' if int(second_diff) > 1 else '')
     if second_diff < 120:
       return "a minute ago"
     if second_diff < 3600:
-      return str(int(second_diff / 60)) + " minutes ago"
+      return str(int(second_diff / 60)) + " minute{0} ago".format('s' if int(second_diff / 60) > 1 else '')
     if second_diff < 7200:
       return "an hour ago"
     if second_diff < 86400:
-      return str(int(second_diff / 3600)) + " hours ago"
+      return str(int(second_diff / 3600)) + " hour{0} ago".format('s' if int(second_diff / 3600) > 1 else '')
   if day_diff == 1:
     return "yesterday"
   if day_diff < 7:
     return str(day_diff) + " days ago"
   if day_diff < 31:
-    return str(int(day_diff / 7)) + " weeks ago"
+    return str(int(day_diff / 7)) + " week{0} ago".format('s' if int(day_diff / 7) > 1 else '')
   if day_diff < 365:
-    return str(int(day_diff / 30)) + " months ago"
-  return str(int(day_diff / 365)) + " years ago"
+    return str(int(day_diff / 30)) + " month{0} ago".format('s' if int(day_diff / 30) > 1 else '')
+  return str(int(day_diff / 365)) + " year{0} ago".format('s' if int(day_diff / 365) > 1 else '')
 
 
 @app.template_filter('ucfirst')
 def ucfirst(text):
+  """
+  Template filter for capitalizing the first letter of a word
+
+  Args:
+    text: the text to be modified
+
+  Returns:
+    A string with the first letter uppercase.
+  """
   return text[0].upper() + text[1:]
