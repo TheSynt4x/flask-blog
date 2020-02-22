@@ -3,7 +3,8 @@ from flask import current_app as app
 from app.controllers.auth.login import LoginController
 from app.controllers.auth.logout import LogoutController
 from app.controllers.auth.register import RegisterController
-from app.controllers.blog.category import CategoryController, CreateCategoryController
+from app.controllers.blog.category import CategoryController, CreateCategoryController, EditCategoryController, \
+  DeleteCategoryController
 from app.controllers.blog.comment import CommentController, EditCommentController, DeleteCommentController
 from app.controllers.blog.post import PostController, CreatePostController, EditPostController, DeletePostController
 from app.controllers.blog.search import SearchController
@@ -39,6 +40,9 @@ app.add_url_rule('/ucp/avatar', view_func=ChangeAvatarController.as_view('avatar
 
 # Admin routes
 app.add_url_rule('/admin/create-category', view_func=CreateCategoryController.as_view('blog.category.create'))
+app.add_url_rule('/category/<int:category_id>/edit', view_func=EditCategoryController.as_view('blog.category.edit'))
+app.add_url_rule('/category/<int:category_id>/delete',
+                 view_func=DeleteCategoryController.as_view('blog.category.delete'))
 
 # Miscellaneous routes
 app.add_url_rule('/search', view_func=SearchController.as_view('blog.search'))

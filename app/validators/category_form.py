@@ -3,7 +3,7 @@ from wtforms import SubmitField, StringField, TextAreaField
 from wtforms.validators import DataRequired, Length
 
 
-class CreateCategoryForm(FlaskForm):
+class CategoryForm(FlaskForm):
   name = StringField(
     label='Category name',
     validators=[

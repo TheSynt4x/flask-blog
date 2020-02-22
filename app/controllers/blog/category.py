@@ -2,7 +2,7 @@ from flask import render_template, request, flash, redirect, url_for
 from flask.views import MethodView
 
 from app.models.category import Category
-from app.validators.category_form import CreateCategoryForm
+from app.validators.category_form import CategoryForm
 
 
 class CategoryController(MethodView):
@@ -32,7 +32,7 @@ class CreateCategoryController(MethodView):
     Returns:
       A template with the create category form.
     """
-    return render_template('blog/category/create.html', form=CreateCategoryForm())
+    return render_template('blog/category/create.html', form=CategoryForm())
 
   def post(self):
     """
@@ -41,7 +41,7 @@ class CreateCategoryController(MethodView):
     Returns:
       A template or a flask redirect.
     """
-    form = CreateCategoryForm()
+    form = CategoryForm()
 
     if form.validate_on_submit():
       category = Category.create(form.name.data, form.description.data)
@@ -53,16 +53,59 @@ class CreateCategoryController(MethodView):
 
 
 class EditCategoryController(MethodView):
-  def get(self):
-    pass
+  def get(self, category_id):
+    """
+    Edit a category name and description
 
-  def post(self):
-    pass
+    Args:
+      category_id: category's id
+
+    Returns:
+      A template with the category form.
+    """
+    form = CategoryForm()
+
+    form.submit.label.text = 'Edit'
+    return render_template('blog/category/edit.html', category=Category.get_by_id(category_id), form=form)
+
+  def post(self, category_id):
+    """
+    Edits a category's name and description
+
+    Args:
+      category_id: category's id
+
+    Returns:
+      A template or a redirect if validation passes.
+    """
+    category = Category.get_by_id(category_id)
+    category_name = category.name
+
+    form = CategoryForm()
+
+    form.submit.label.text = 'Edit'
+
+    if form.validate_on_submit():
+      category.update(form.name.data, form.description.data)
+
+      flash('Category {0} has been edited.'.format(category_name), 'success')
+      return redirect(url_for('blog.category', category_id=category.id))
+
+    return render_template('blog/category/edit.html', category=category, form=form)
 
 
 class DeleteCategoryController(MethodView):
-  def get(self):
-    pass
+  def get(self, category_id):
+    """
+    Delete a category by id
 
-  def post(self):
-    pass
+    Args:
+      category_id: category's id
+
+    Returns:
+      A flask redirect.
+    """
+    Category.delete_by_id(category_id)
+
+    flash('Category has been deleted.', 'success')
+    return redirect(url_for('home'))

@@ -55,6 +55,21 @@ class Category(db.Model):
     return cls.query.filter_by(id=category_id).first_or_404()
 
   @classmethod
+  def delete_by_id(cls, category_id):
+    """
+    Delete a category by id
+
+    Args:
+      category_id: category's id
+
+    Returns:
+      void
+    """
+    category = cls.get_by_id(category_id)
+    db.session.delete(category)
+    db.session.commit()
+
+  @classmethod
   def limit(cls, limit=5):
     """
     Get a certain amount of categories
@@ -83,3 +98,18 @@ class Category(db.Model):
     category = cls.get_by_id(category_id)
 
     return dict(category=category, posts=category.posts.paginate(page, per_page, True))
+
+  def update(self, name, description):
+    """
+    Update category name and description
+
+    Args:
+      name: category's name
+      description: category's description
+
+    Returns:
+      void
+    """
+    self.name = name
+    self.description = description
+    db.session.commit()

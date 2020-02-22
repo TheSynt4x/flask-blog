@@ -1,0 +1,26 @@
+{% extends 'layouts/app.html' %}
+
+{% block description %}Create a Post{% endblock %}
+
+{% from 'macros/validation-macro.html' import form_field %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 my-4">
+            <div class="card">
+                <h5 class="card-header">Edit a Category</h5>
+
+                <div class="card-body">
+                    <form action="{{ url_for('blog.category.edit', category_id=category.id) }}" method="POST" class="needs-validation">
+                        {{ form_field(form.name, category.name) }}
+                        {{ form_field(form.description, category.description, rows=4) }}
+                        {{ form_field(form.submit) }}
+
+                        {{ form.csrf_token }}
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
