@@ -66,6 +66,15 @@ class Category(db.Model):
       void
     """
     category = cls.get_by_id(category_id)
+
+    for post in category.posts:
+      for comment in post.comments:
+        db.session.delete(comment)
+        db.session.commit()
+
+      db.session.delete(post)
+      db.session.commit()
+
     db.session.delete(category)
     db.session.commit()
 
