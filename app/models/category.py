@@ -13,6 +13,25 @@ class Category(db.Model):
     return '<Category %r>' % self.name
 
   @classmethod
+  def create(cls, name, description):
+    """
+    Create a new category
+
+    Args:
+      name: category name
+      description: category description
+
+    Returns:
+      The newly created category
+    """
+    category = cls(name=name, description=description)
+
+    db.session.add(category)
+    db.session.commit()
+
+    return category
+
+  @classmethod
   def all(cls):
     """
     Get all categories

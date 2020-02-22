@@ -3,7 +3,7 @@ from flask import current_app as app
 from app.controllers.auth.login import LoginController
 from app.controllers.auth.logout import LogoutController
 from app.controllers.auth.register import RegisterController
-from app.controllers.blog.category import CategoryController
+from app.controllers.blog.category import CategoryController, CreateCategoryController
 from app.controllers.blog.comment import CommentController, EditCommentController, DeleteCommentController
 from app.controllers.blog.post import PostController, CreatePostController, EditPostController, DeletePostController
 from app.controllers.blog.search import SearchController
@@ -36,6 +36,9 @@ app.add_url_rule('/blog/post-<int:post_id>/comment-<int:comment_id>/delete',
 # UCP routes
 app.add_url_rule('/ucp/password', view_func=ChangePasswordController.as_view('password'))
 app.add_url_rule('/ucp/avatar', view_func=ChangeAvatarController.as_view('avatar'))
+
+# Admin routes
+app.add_url_rule('/admin/create-category', view_func=CreateCategoryController.as_view('blog.category.create'))
 
 # Miscellaneous routes
 app.add_url_rule('/search', view_func=SearchController.as_view('blog.search'))
