@@ -1,4 +1,4 @@
-from flask import current_app as app, render_template, request, redirect, url_for, flash
+from flask import current_app as app, render_template, request, redirect, url_for, flash, session
 from flask.views import MethodView
 
 from app.middleware import auth
@@ -115,12 +115,11 @@ class DeletePostController(MethodView):
     Returns:
 
     """
-    post = Post.delete_by_id(post_id)
+    post = Post.delete_by_id(post_id, session.get('user_id'))
 
-    if post:
-      flash('Your post has been successfully deleted', 'success')
-
-      return redirect(url_for('home'))
-    else:
+    if not post:
       flash('That post does not belong to you', 'error')
       return redirect(url_for('blog.post', post_id=post.id))
+
+    flash('Your post has been successfully deleted', 'success')
+    return redirect(url_for('home'))
